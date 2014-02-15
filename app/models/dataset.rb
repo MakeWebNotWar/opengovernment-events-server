@@ -7,5 +7,5 @@ class Dataset
   field :description, type: String
   field :url, type: String
 
-  embedded_in :location
+  has_and_belongs_to_many :events
 end

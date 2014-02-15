@@ -9,7 +9,4 @@ class Location
   field :province, type: String
   field :postal_code, type: String
   field :country, type: String, default: "Canada"
-
-  belongs_to :event
-  embeds_many :datasets
 end

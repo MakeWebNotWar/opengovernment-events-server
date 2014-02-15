@@ -1,11 +1,19 @@
 OpengovernmentRoadtrip::Application.routes.draw do
 
-  devise_for :users
+  root to: redirect('api/v1/')
+  
   namespace :api do
     namespace :v1 do
+      root to: 'events#index'
+
+      resources :datasets
+      resources :events
       resources :locations
+
+      devise_for :users
     end
-  end  
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

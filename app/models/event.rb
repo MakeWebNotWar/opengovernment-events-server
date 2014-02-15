@@ -1,6 +1,7 @@
 class Event
   include Mongoid::Document
   include Mongoid::Timestamps
+  # include Mongoid::Attributes::Dynamic
 
   field :name, type: String
   field :description, type: String
@@ -9,5 +10,5 @@ class Event
   field :end_date, type: DateTime
 
   has_one :location
-  embeds_many :datasets
+  has_and_belongs_to_many :datasets
 end
