@@ -4,11 +4,11 @@ module Api
     class DatasetsController < ApplicationController
 
       def index
-
+        @datasets = Dataset.all.to_a
       end
 
       def show
-
+        @dataset = Dataset.find(id: params[:id])
       end
 
       def create
@@ -26,7 +26,7 @@ module Api
       private
 
       def datasets_params
-        params.require(:datasets).permit(:name, :description, :url)
+        params.require(:dataset).permit(:id, :name, :description, :url)
       end
 
     end

@@ -1,12 +1,18 @@
 object @event => :event
 attributes :id, :name, :description, :url, :start_date, :end_date
 
-if root_object.location
-  node :location, :object_root => :location do
+node :location, :object_root => :location do
+  if root_object.location
     root_object.location.id
+  else
+    nil
   end
-else
-  node :location, :object_root => :location do |l|
+end
+
+node :datasets, :object_root => :datasets do
+  if root_object.datasets
+    root_object.datasets.map { |dataset| dataset.id }
+  else
     nil
   end
 end

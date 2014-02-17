@@ -3,11 +3,11 @@ class Event
   include Mongoid::Timestamps
   # include Mongoid::Attributes::Dynamic
 
-  field :name, type: String, default: nil
-  field :description, type: String, default: nil
+  field :name, type: String, default: "Untitled Event"
+  field :description, type: String, default: "No Description."
   field :url, type: String, default: nil
-  field :start_date, type: DateTime, default: nil
-  field :end_date, type: DateTime, default: nil
+  field :start_date, type: DateTime, default: Time.now
+  field :end_date, type: DateTime, default: Time.now + 1.hour
 
 
   belongs_to :location
