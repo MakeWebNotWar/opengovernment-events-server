@@ -2,7 +2,6 @@ module Api
   module V1
 
     class LocationsController < ApplicationController
-      before_filter :authenticate_user!
       respond_to :json
 
       def index
@@ -10,7 +9,7 @@ module Api
       end
 
       def show
-        @location = Location.where(location_params).first
+        @location = Location.where(id: params[:id]).first
       end
 
       def create
@@ -29,7 +28,7 @@ module Api
       private
 
       def location_params
-        params.require(:location).permit(:name, :address_1, :address_2, :city, :province, :country, :postal_code)
+        params.require(:location).permit(:id, :name, :address_1, :address_2, :city, :province, :country, :postal_code)
       end
 
     end

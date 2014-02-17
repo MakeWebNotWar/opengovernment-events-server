@@ -2,11 +2,13 @@ class Location
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :name, type: String
-  field :address_1, type: String
-  field :address_2, type: String
-  field :city, type: String
-  field :province, type: String
-  field :postal_code, type: String
+  field :name, type: String, default: nil
+  field :address_1, type: String, default: nil
+  field :address_2, type: String, default: nil
+  field :city, type: String, default: nil
+  field :province, type: String, default: nil
+  field :postal_code, type: String, default: nil
   field :country, type: String, default: "Canada"
+
+  has_many :events
 end
