@@ -16,6 +16,10 @@ class Location
   after_validation :geocode
 
   def full_address
-      [address_1, address_2, city, province, country].compact.join(', ')
+    [address_1, address_2, city, province, country].compact.join(', ')
+  end
+
+  def events
+    Events.where({location: self.id}).to_a
   end
 end
