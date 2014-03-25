@@ -20,6 +20,6 @@ class Location
   end
 
   def events
-    Events.where({location: self.id}).to_a
+    Event.where({location: self.id}).to_a
   end
 end
