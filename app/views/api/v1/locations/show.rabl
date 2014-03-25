@@ -10,3 +10,11 @@ else
     nil
   end
 end
+
+node :coordinates do 
+  if root_object.coordinates
+    [root_object.coordinates[1], root_object.coordinates[0]]
+  else
+    [ nil, nil ]
+  end
+end

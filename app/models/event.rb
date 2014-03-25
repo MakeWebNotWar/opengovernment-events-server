@@ -2,7 +2,7 @@ class Event
   include Mongoid::Document
   include Mongoid::Timestamps
   # include Mongoid::Attributes::Dynamic
-
+  
   field :name, type: String, default: "Untitled Event"
   field :description, type: String, default: "No Description."
   field :url, type: String, default: nil
@@ -14,5 +14,6 @@ class Event
   has_and_belongs_to_many :datasets
 
   accepts_nested_attributes_for :location, inverse_of: nil
+
 
 end

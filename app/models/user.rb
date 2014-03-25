@@ -7,9 +7,13 @@ class User
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  before_save :ensure_authentication_token
+
   ## Database authenticatable
   field :email,              :type => String, :default => ""
   field :encrypted_password, :type => String, :default => ""
+
+  field :authentication_token, :type => String
 
   ## Recoverable
   field :reset_password_token,   :type => String
@@ -36,7 +40,27 @@ class User
   # field :unlock_token,    :type => String # Only if unlock strategy is :email or :both
   # field :locked_at,       :type => Time
 
-  field :name, type: String
+  field :firstname, type: String
+  field :lastname, type: String
   field :username, type: String
+
+  def name
+    [firstname, lastname].compact.join(" ")
+  end
+
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
+  end
+ 
+  private
+  
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
+  end
 
 end

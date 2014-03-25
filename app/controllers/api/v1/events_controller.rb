@@ -5,7 +5,9 @@ module Api
       respond_to :json
 
       def index
-        @events = Event.all
+        # params[:start_date] = Date.now if(!params[:start_date])
+        @events = Event.all.order_by(:start_date.asc)
+        # @ip = request.remote_ip
       end
 
       def show
