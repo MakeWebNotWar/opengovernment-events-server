@@ -8,11 +8,3 @@ node :location, :object_root => :location do
     nil
   end
 end
-
-node :datasets, :object_root => :datasets do
-  if root_object.datasets
-    root_object.datasets.map { |dataset| dataset.id }
-  else
-    nil
-  end
-end

@@ -4,5 +4,5 @@ class Comment
 
   field :text, type: String
   belongs_to :user
-  belongs_to :event
+  belongs_to :commentable, polymorphic: true
 end

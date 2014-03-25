@@ -15,7 +15,6 @@ class Location
   geocoded_by :full_address
   after_validation :geocode
 
-
   def full_address
       [address_1, address_2, city, province, country].compact.join(', ')
   end

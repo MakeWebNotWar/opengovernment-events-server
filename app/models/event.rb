@@ -10,5 +10,6 @@ class Event
   field :end_date, type: DateTime, default: Time.now + 1.hour
 
   belongs_to :location
+  has_many :comments, as: :commentable
   accepts_nested_attributes_for :location, inverse_of: nil
 end
