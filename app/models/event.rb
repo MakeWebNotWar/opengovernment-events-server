@@ -9,11 +9,6 @@ class Event
   field :start_date, type: DateTime, default: Time.now
   field :end_date, type: DateTime, default: Time.now + 1.hour
 
-
   belongs_to :location
-  has_and_belongs_to_many :datasets
-
   accepts_nested_attributes_for :location, inverse_of: nil
-
-
 end

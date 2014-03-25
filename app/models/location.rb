@@ -12,8 +12,6 @@ class Location
   field :country, type: String, default: "Canada"
   field :coordinates, type: Array
 
-  has_many :events
-
   geocoded_by :full_address
   after_validation :geocode
 

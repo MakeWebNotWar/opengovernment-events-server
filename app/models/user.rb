@@ -29,6 +29,11 @@ class User
   field :current_sign_in_ip, :type => String
   field :last_sign_in_ip,    :type => String
 
+  field :firstname, type: String
+  field :lastname, type: String
+  field :username, type: String
+
+
   ## Confirmable
   # field :confirmation_token,   :type => String
   # field :confirmed_at,         :type => Time
@@ -40,9 +45,7 @@ class User
   # field :unlock_token,    :type => String # Only if unlock strategy is :email or :both
   # field :locked_at,       :type => Time
 
-  field :firstname, type: String
-  field :lastname, type: String
-  field :username, type: String
+  has_many :comments
 
   def name
     [firstname, lastname].compact.join(" ")
