@@ -7,13 +7,13 @@ module Api
       def index
         params[:start_date] = Time.now if(!params[:start_date])
 
-        if params[:location]
-          coordinates = Geocoder.coordinates("719 Caboto Trail, Markham, Ontario")
-          location_ids = Location.where(:coordinates.near => coordinates).only(:id).map(&:id)
-          @events = Event.where(:location.in => location_ids, :start_date.gt => params[:start_date]).to_a
-        else
-          @events = Event.where(:start_date.gt => params[:start_date]).to_a
-        end
+        # if params[:location]
+        #   coordinates = Geocoder.coordinates("719 Caboto Trail, Markham, Ontario")
+        #   location_ids = Location.where(:coordinates.near => coordinates).only(:id).map(&:id)
+        #   @events = Event.where(:location.in => location_ids, :start_date.gt => params[:start_date]).to_a
+        # else
+        @events = Event.all.to_a
+        # end
 
         # else
           # @events = Event.where(:start_date.gt => params[:start_date])

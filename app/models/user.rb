@@ -32,6 +32,7 @@ class User
   field :firstname, type: String
   field :lastname, type: String
   field :username, type: String
+  field :admin, type: Boolean
 
 
   ## Confirmable
