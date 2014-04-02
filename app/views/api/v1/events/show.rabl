@@ -9,8 +9,10 @@ node :location, :object_root => :location do
   end
 end
 
-
-
 node :comments do 
-  root_object.comments.map { |event| event.id }
+  root_object.comments.map { |comment| comment.id }
+end
+
+node :users do 
+  root_object.users.map { |user| user.id }
 end
