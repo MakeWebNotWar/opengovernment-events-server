@@ -12,7 +12,7 @@ module Api
         #   location_ids = Location.where(:coordinates.near => coordinates).only(:id).map(&:id)
         #   @events = Event.where(:location.in => location_ids, :start_date.gt => params[:start_date]).to_a
         # else
-        @events = Event.all.to_a
+        @events = Event.where(:start_date.gt => params[:start_date]).asc().to_a
         # end
 
         # else
