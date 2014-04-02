@@ -47,6 +47,7 @@ class User
   # field :locked_at,       :type => Time
 
   has_many :comments
+  has_many :events
 
   def name
     [firstname, lastname].compact.join(" ")

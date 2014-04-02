@@ -13,4 +13,5 @@ class Event
   belongs_to :location
   has_many :comments
   accepts_nested_attributes_for :location, inverse_of: nil
+  belongs_to :user
 end
