@@ -14,4 +14,6 @@ class Event
   has_many :comments
   accepts_nested_attributes_for :location, inverse_of: nil
   belongs_to :user
+
+  default_scope gt(start_date: Time.now).asc
 end
