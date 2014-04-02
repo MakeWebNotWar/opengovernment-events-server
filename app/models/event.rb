@@ -15,5 +15,5 @@ class Event
   accepts_nested_attributes_for :location, inverse_of: nil
   belongs_to :user
 
-  default_scope where(:start_date.gt Time.now).asc
+  default_scope where(:start_date.gt => Time.now).asc
 end
