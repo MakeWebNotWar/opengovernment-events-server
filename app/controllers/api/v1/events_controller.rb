@@ -52,7 +52,7 @@ module Api
       private
 
       def event_params
-        params.require(:event).permit(:id, :name, :description, :url, :start_date, :end_date)
+        params.require(:event).permit(:id, :name, :description, :url, :start_date, :end_date, :user)
       end
 
     end
