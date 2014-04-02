@@ -9,8 +9,10 @@ OpengovernmentRoadtrip::Application.routes.draw do
       resources :datasets
       resources :events
       resources :locations
+      resources :comments
+      resources :login
+      resources :users
 
-      devise_for :users
     end
   end
 

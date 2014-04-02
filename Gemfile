@@ -32,6 +32,7 @@ group :doc do
 end
 
 gem 'mongoid', github: "mongoid/mongoid"
+gem 'mongoid-tree', :require => 'mongoid/tree'
 
 gem 'devise'
 

@@ -46,10 +46,14 @@ class User
   # field :unlock_token,    :type => String # Only if unlock strategy is :email or :both
   # field :locked_at,       :type => Time
 
-  has_many :comments, as: :commentable
+  has_many :comments
 
   def name
     [firstname, lastname].compact.join(" ")
+  end
+
+  def gravatarID
+    Digest::MD5::hexdigest(email).downcase
   end
 
   def ensure_authentication_token

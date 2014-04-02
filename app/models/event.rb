@@ -11,6 +11,6 @@ class Event
   field :type, type: String
 
   belongs_to :location
-  has_many :comments, as: :commentable
+  has_many :comments
   accepts_nested_attributes_for :location, inverse_of: nil
 end

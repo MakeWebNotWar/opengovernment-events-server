@@ -68,6 +68,8 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (4.7.5)
+    mongoid-tree (1.0.4)
+      mongoid (>= 3.0, <= 4.0)
     moped (2.0.0.beta6)
       bson (~> 2.2)
       connection_pool (~> 1.2)
@@ -143,6 +145,7 @@ DEPENDENCIES
   geocoder
   jquery-rails
   mongoid!
+  mongoid-tree
   rabl
   rack-cors
   rails (= 4.0.2)

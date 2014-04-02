@@ -8,3 +8,9 @@ node :location, :object_root => :location do
     nil
   end
 end
+
+
+
+node :comments do 
+  root_object.comments.map { |event| event.id }
+end
