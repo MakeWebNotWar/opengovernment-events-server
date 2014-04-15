@@ -33,6 +33,7 @@ class User
   field :lastname, type: String
   field :username, type: String
   field :admin, type: Boolean
+  field :url, type: String
 
 
   ## Confirmable
@@ -49,6 +50,10 @@ class User
   has_many :comments
   has_many :events
 
+  index({ authentication_token: 1 }, { unique: true, name: "authentication_token_index" })
+  index({ email: 1 }, { unique: true, name: "email_index" })
+
+
   def name
     [firstname, lastname].compact.join(" ")
   end
@@ -61,6 +66,10 @@ class User
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token
     end
+  end
+
+  def valid_authentication_token?(token)
+    authentication_token === token
   end
  
   private
