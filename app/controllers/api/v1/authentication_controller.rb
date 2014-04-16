@@ -38,9 +38,12 @@ class Api::V1::AuthenticationController < Api::V1::ApplicationController
     user.ensure_authentication_token
     render json: {
       success: true,
-      id: user.id,
-      email: user.email,
-      authentication_token: user.authentication_token
+      user_id: user.id,
+      user_email: user.email,
+      user_firstname: user.firstname,
+      user_lastname: user.lastname,
+      authentication_token: user.authentication_token,
+      message: "Successfully authenticated!"
     }
     return
   end
