@@ -1,5 +1,5 @@
 object @event => :event
-attributes :id, :name, :description, :url, :start_date, :end_date
+attributes :id, :name, :description, :url, :start_date, :end_date, :created_at, :updated_at
 
 node :location, :object_root => :location do
   if root_object.location

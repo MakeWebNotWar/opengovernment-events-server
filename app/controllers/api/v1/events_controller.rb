@@ -1,56 +1,61 @@
 class Api::V1::EventsController < Api::V1::ApplicationController
   skip_before_filter :authenticate_user_from_token!, only: [:index, :show]
+  before_filter :correct_user, except: [:index, :show, :create]
+
   respond_to :json
 
   def index
     params[:start_date] = Time.now if(!params[:start_date])
 
-    # if params[:location]
-    #   coordinates = Geocoder.coordinates("719 Caboto Trail, Markham, Ontario")
-    #   location_ids = Location.where(:coordinates.near => coordinates).only(:id).map(&:id)
-    #   @events = Event.where(:location.in => location_ids, :start_date.gt => params[:start_date]).to_a
-    # else
-    @events = Event.where(:start_date.gt => params[:start_date]).asc().to_a
-    # end
+    # @events = Event.where(:start_date.gte => params[:start_date] - 1.day).asc().to_a
 
-    # else
-      # @events = Event.where(:start_date.gt => params[:start_date])
-    # end
-    # @ip = request.remote_ip
+    @events = Event.all
+
   end
 
   def show
-    @event = Event.where(id: params[:id]).first
+    @event = Event.find(params[:id])
   end
 
   def create
+    params[:event][:user] = current_user.id.to_s
+
     @event = Event.new(event_params)
-    @event.save
+    if @event.save
+      render :show
+    else
+      invalid_attempt("Unable to create Event.", @event)
+    end
   end
 
   def update
-    @event = Event.where(event_params).first
     @event.attributes(event_params)
+    @event.user = current_user.id.to_s
     if @event.save
-      @event
+      render :show
     else
-      render status: 400
+      invalid_attempt("Unable to update Event.", @event)
     end
   end
 
   def destroy
-    @event = Event.where(params[:id])
     if @event.destroy
-      render status: 200
+      render json: {success: true}, status: 200
+      return
     else
-      render status: 400
+      render invalid_attempt("Unable to destroy Event.", @event)
     end
   end
 
   private
 
   def event_params
-    params.require(:event).permit(:id, :name, :description, :url, :start_date, :end_date, :user)
+    params.require(:event).permit(:id, :name, :description, :url, :start_date, :end_date, :type, :user)
+  end
+
+  def correct_user
+    @event = Event.find(params[:id])
+    return if current_user === @event.user
   end
 
 end

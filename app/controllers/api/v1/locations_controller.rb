@@ -7,20 +7,30 @@ class Api::V1::LocationsController < Api::V1::ApplicationController
   end
 
   def show
-    @location = Location.where(id: params[:id]).first
+    @location = Location.find(params[:id])
   end
 
   def create
     @location = Location.new(location_params)
-    @location.save
+    if @location.save
+      render :show
+    else
+      invalid_attempt("Unable to create Location.", @location)
+    end
   end
 
   def update
-
+    @location = Location.find(params[:id])
   end
 
   def destroy
-    @location = Location.where(params[:id])
+    @location = Location.find(params[:id])
+
+    if @location.destroy
+
+    else
+
+    end
   end
 
   private

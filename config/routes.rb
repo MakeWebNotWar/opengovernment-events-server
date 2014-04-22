@@ -11,6 +11,7 @@ OpengovernmentRoadtrip::Application.routes.draw do
       resources :comments
       resources :authentication, only: [:create, :destroy]
       devise_for :users
+      resources :users
 
     end
   end
