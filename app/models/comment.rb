@@ -6,6 +6,7 @@ class Comment
   field :text, type: String
 
   belongs_to :owner, class_name: "User", inverse_of: :comments
+  belongs_to :event
   belongs_to :commentable, polymorphic: true
   has_many :replies, class_name: "Comment", inverse_of: "parent_comment"
   belongs_to :parent_comment, class_name: "Comment", inverse_of: "replies"

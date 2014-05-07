@@ -6,9 +6,11 @@ OpengovernmentRoadtrip::Application.routes.draw do
     namespace :v1 do
       root to: 'events#index'
 
-      resources :events
-      resources :locations
+      resources :events do 
+        resources :comments
+      end
       resources :comments
+      resources :locations
       resources :authentication, only: [:create, :destroy]
       devise_for :users
       resources :users
