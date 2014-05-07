@@ -18,11 +18,21 @@ class Api::V1::CommentsController < ApplicationController
       invalid_attempt("Could not create Comment.", @comment)
     end
   end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+
+    if @comment.destroy
+      render json: { success: true, message: "Comment Destroyed"}, status: 200
+    else
+
+    end
+  end
  
   private
 
   def comment_params
-    params.require(:comment).permit(:text, :event_id, :owner)
+    params.require(:comment).permit(:text, :event_id, :user_id)
   end
 
 end
