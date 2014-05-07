@@ -60,7 +60,6 @@ module ApplicationHelper
 
     if params[:authentication][key].blank? && request.headers[header_key]
       params[:authentication][key] = request.headers[header_key]
-      # puts "Key: #{params[:authentication][key]}"
       return true
     end
 
