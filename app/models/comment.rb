@@ -26,8 +26,4 @@ class Comment
     } if parent_object
   end
 
-  def owner
-    return user if user
-  end
-
 end
