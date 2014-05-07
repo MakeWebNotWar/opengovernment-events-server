@@ -9,9 +9,9 @@ node :replies do
   root_object.replies
 end
 
-node :user, :object_root => :user do
-  if root_object.user
-    root_object.user.id
+node :owner, :object_root => :owner do
+  if root_object.owner
+    root_object.owner.id
   else
     nil
   end
