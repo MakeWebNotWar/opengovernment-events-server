@@ -1,2 +1,2 @@
 object @comment => :comment
-attributes :id, :text, :created_at, :updated_at
+attributes :id, :text, :created_at, :updated_at, :user, :event
