@@ -42,7 +42,7 @@ gem 'will_paginate', "~> 3.0"
 
 gem 'geocoder'
 
-gem 'thin'
+gem 'unicorn-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
