@@ -1,5 +1,5 @@
 class Api::V1::CommentsController < ApplicationController
-  skip_before_filter :authenticate_user_from_token!
+  skip_before_filter :authenticate_user_from_token!, only: [:index, :show]
   
   def index
     @comments = Comment.all
@@ -22,7 +22,7 @@ class Api::V1::CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:text, :event, :owner)
+    params.require(:comment).permit(:text, :commentable, :owner)
   end
 
 end
