@@ -25,12 +25,6 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 1.2'
 gem 'rabl'
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
-
 gem 'mongoid', github: "mongoid/mongoid"
 gem 'mongoid-tree', :require => 'mongoid/tree'
 
@@ -43,6 +37,17 @@ gem 'will_paginate', "~> 3.0"
 gem 'geocoder'
 
 gem 'unicorn-rails'
+
+group :doc do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem 'sdoc', require: false
+end
+
+
+group :development do
+  gem 'mailcatcher'
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

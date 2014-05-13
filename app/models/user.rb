@@ -3,8 +3,8 @@ class User
   include Mongoid::Timestamps
 
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
   before_save :ensure_authentication_token
@@ -29,6 +29,12 @@ class User
   field :current_sign_in_ip, :type => String
   field :last_sign_in_ip,    :type => String
 
+  ## Confirmable
+  field :confirmation_token, :type => String
+  field :confirmed_at, :type => Time
+  field :confirmation_sent_at, :type => Time
+  field :unconfirmed_email, :type => String
+
   field :firstname, type: String
   field :lastname, type: String
   field :username, type: String
@@ -51,8 +57,10 @@ class User
   has_many :events
 
   index({ authentication_token: 1 }, { unique: true, name: "authentication_token_index" })
+  index({ confirmation_token: 1}, {unique: true, name: "confirmation_token_index"})
   index({ email: 1 }, { unique: true, name: "email_index" })
 
+  # validates :email, :presence => true
 
   def name
     [firstname, lastname].compact.join(" ")
