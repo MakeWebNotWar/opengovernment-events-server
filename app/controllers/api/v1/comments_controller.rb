@@ -23,10 +23,15 @@ class Api::V1::CommentsController < Api::V1::ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
 
-    if @comment.destroy
-      render json: { success: true, message: "Comment Destroyed"}, status: 200
+    if @comment.user === current_user
+
+      if @comment.destroy
+        render json: { success: true, message: "Comment Destroyed"}, status: 200
+      else
+        render json: { success: false, message: "Couldn't Destroy Comment"}, status: 500
+      end
     else
-      render json: { success: false, message: "Couldn't Destroy Comment"}, status: 500
+      render json: { success: false, message: "This comment does not belong to you."}, status: 400
     end
   end
  
