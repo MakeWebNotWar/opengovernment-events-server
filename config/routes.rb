@@ -6,15 +6,14 @@ OpengovernmentRoadtrip::Application.routes.draw do
     namespace :v1 do
       root to: 'events#index'
 
-      resources :events do 
-        resources :comments
-      end
+      resources :events
       resources :comments
       resources :locations
       resources :authentication, only: [:create, :destroy]
       devise_for :users
       resources :users
       get "confirmations/:confirmation_token", to: 'confirmations#show'
+      post "signup", to: 'signup#create'
     end
   end
 

@@ -8,3 +8,11 @@ node :events do
     []
   end
 end
+
+node :comments do
+  if root_object.comments
+    root_object.comments.map { |comment| comment.id }
+  else
+    []
+  end
+end

@@ -6,7 +6,7 @@ class Api::V1::SignupController < Api::V1::ApplicationController
   def create
    user = User.new(signup_params)
     if user.save
-      render :json=> user.as_json(:auth_token=>user.authentication_token, :email=>user.email), :status=>201
+      render json: user.as_json(:auth_token=>user.authentication_token, :email=>user.email), :status=>201
       return
     else
       warden.custom_failure!
