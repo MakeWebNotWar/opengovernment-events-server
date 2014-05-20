@@ -55,6 +55,7 @@ class User
 
   has_many :comments
   has_many :events
+  has_many :notifications
 
   index({ authentication_token: 1 }, { unique: true, name: "authentication_token_index" })
   index({ confirmation_token: 1}, {unique: true, name: "confirmation_token_index"})
@@ -78,6 +79,10 @@ class User
 
   def valid_authentication_token?(token)
     authentication_token === token
+  end
+
+  def confirmed
+    confirmed_at.blank? ? false : true
   end
  
   private

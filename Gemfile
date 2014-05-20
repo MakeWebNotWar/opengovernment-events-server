@@ -27,6 +27,7 @@ gem 'turbolinks'
 gem 'rabl'
 gem 'mongoid', github: "mongoid/mongoid"
 gem 'mongoid-tree', :require => 'mongoid/tree'
+gem 'mongoid-observers'
 
 gem 'devise'
 
