@@ -45,7 +45,8 @@ class Api::V1::AuthenticationController < Api::V1::ApplicationController
       user_firstname: user.firstname,
       user_lastname: user.lastname,
       authentication_token: user.authentication_token,
-      user_gravatarID: user.gravatarID
+      user_gravatarID: user.gravatarID,
+      user_confirmed: user.confirmed
     }
     return
   end

@@ -12,6 +12,7 @@ OpengovernmentRoadtrip::Application.routes.draw do
       resources :authentication, only: [:create, :destroy]
       devise_for :users
       resources :users
+      resources :notifications 
       get "confirmations/:confirmation_token", to: 'confirmations#show'
       post "signup", to: 'signup#create'
     end

@@ -32,5 +32,8 @@ module OpengovernmentRoadtrip
         resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
       end
     end
+
+    config.mongoid.observers = :comment_observer
+
   end
 end
