@@ -11,6 +11,7 @@ class Api::V1::CommentsController < Api::V1::ApplicationController
 
 
   def create
+    logger.debug "\n\r#{request.headers}\n\r"
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save

@@ -1,6 +1,6 @@
 class Api::V1::EventsController < Api::V1::ApplicationController
   skip_before_filter :authenticate_user_from_token!, only: [:index, :show]
-  before_filter :correct_user, except: [:index, :show, :create]
+  # before_filter :correct_user, except: [:index, :show, :create]
 
   respond_to :json
 
@@ -29,6 +29,7 @@ class Api::V1::EventsController < Api::V1::ApplicationController
   end
 
   def update
+
     @event.attributes(event_params)
     @event.user = current_user.id.to_s
     if @event.save
