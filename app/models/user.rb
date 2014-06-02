@@ -38,7 +38,7 @@ class User
   field :firstname, type: String
   field :lastname, type: String
   field :username, type: String
-  field :admin, type: Boolean
+  field :admin, type: Boolean, default: false
   field :url, type: String
 
 
@@ -56,6 +56,7 @@ class User
   has_many :comments
   has_many :events
   has_many :notifications
+  has_many :auth_providers
 
   index({ authentication_token: 1 }, { unique: true, name: "authentication_token_index" })
   index({ confirmation_token: 1}, {unique: true, name: "confirmation_token_index"})

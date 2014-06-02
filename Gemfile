@@ -39,6 +39,8 @@ gem 'geocoder'
 
 gem 'unicorn-rails'
 
+gem 'oauth'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
