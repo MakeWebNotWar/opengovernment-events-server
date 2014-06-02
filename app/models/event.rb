@@ -12,6 +12,7 @@ class Event
   belongs_to :user
   belongs_to :location
   has_many :comments
+  has_and_belongs_to_many :coorganizers, class_name: "User", inverse_of: "coorganizes"
   # has_many :comments, as: :commentable
   
   accepts_nested_attributes_for :location, inverse_of: nil

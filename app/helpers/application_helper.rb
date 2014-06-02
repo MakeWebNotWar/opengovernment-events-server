@@ -58,6 +58,10 @@ module ApplicationHelper
     key = name.join('_').to_sym
     header_key ||= "X-#{name.map(&:capitalize).join('-')}"
 
+    logger.debug "\n\rheader: #{request.headers['X-Authentication-Token']}\n\r"
+    logger.debug "\n\rheader: #{request.headers['X-User-Email']}\n\r"
+    logger.debug "\n\rheader: #{request.headers['X-User-Password']}\n\r"
+
     if params[:authentication][key].blank? && request.headers[header_key]
       params[:authentication][key] = request.headers[header_key]
     end
