@@ -23,7 +23,25 @@ module ApplicationHelper
   end
 
   def current_user
-    @current_user
+    @current_user ||= User.find_for_database_authentication(request.headers['X-Authentication-Token'])
+  end
+
+  def authenticate_user!(user)
+    user.ensure_authentication_token
+    render json: {
+      success: true,
+      message: "Authenticated",
+      requires_signup: !user.email?,
+      user_id: user.id,
+      user_email: user.email,
+      user_firstname: user.firstname,
+      user_lastname: user.lastname,
+      authentication_token: user.authentication_token,
+      user_confirmed: user.confirmed,
+      user_gravatarID: user.gravatarID,
+      admin: user.admin
+    }
+    return
   end
 
   private
@@ -85,5 +103,21 @@ module ApplicationHelper
   def ensure_user_password
     ensure_authentication_param("User Password")
   end
+
+  def prepare_twitter_access_token(oauth_token, oauth_token_secret)
+    consumer = OAuth::Consumer.new(ENV["Twitter_API_Key"], ENV["Twitter_API_Secret"], {
+        site: 'https://api.twitter.com',
+        scheme: :header
+      })
+
+    token_hash = {
+      :oauth_token => oauth_token,
+      :oauth_token_secret => oauth_token_secret
+    }
+
+    access_token = OAuth::AccessToken.from_hash(consumer, token_hash)
+    return access_token
+  end
+
 
 end

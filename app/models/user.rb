@@ -85,9 +85,15 @@ class User
   def confirmed
     confirmed_at.blank? ? false : true
   end
+
+  def create_without_email_validation
+    self.skip_confirmation!
+    self.save(validate: false)
+  end
+ 
  
   private
-  
+ 
   def generate_authentication_token
     loop do
       token = Devise.friendly_token
