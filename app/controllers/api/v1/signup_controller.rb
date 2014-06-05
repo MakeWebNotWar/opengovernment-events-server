@@ -4,10 +4,10 @@ class Api::V1::SignupController < Api::V1::ApplicationController
   respond_to :json
 
   def create
-    signup = request.headers
-    if signup["X-Provider-Auth-Token"] && signup["X-Provider-Token-Secret"] && signup["X-Provider-Name"] === "twitter"
-      token = signup["X-Provider-Auth-Token"]
-      token_secret = signup["X-Provider-Token-Secret"]
+    header = request.headers
+    if header["X-Provider-Auth-Token"] && header["X-Provider-Token-Secret"] && header["X-Provider-Name"] === "twitter"
+      token = header["X-Provider-Auth-Token"]
+      token_secret = header["X-Provider-Token-Secret"]
       access_token = prepare_twitter_access_token(token, token_secret)
       response = access_token.request(:get, "https://api.twitter.com/1.1/account/verify_credentials.json")
       if response.code === "200"
@@ -47,10 +47,10 @@ class Api::V1::SignupController < Api::V1::ApplicationController
               firstname: firstname,
               lastname: lastname,
             }
-            user.create_without_email_validation
+            user.auth_providers << authProvider
+            user.save
           end
 
-          authProvider.user = user
           authProvider.save
 
           render json:{

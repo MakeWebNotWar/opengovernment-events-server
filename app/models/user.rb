@@ -60,7 +60,7 @@ class User
 
   index({ authentication_token: 1 }, { unique: true, name: "authentication_token_index" })
   index({ confirmation_token: 1}, {unique: true, name: "confirmation_token_index"})
-  index({ email: 1 }, { unique: true, name: "email_index" })
+  index({ email: 1 }, { name: "email_index" })
 
   # validates :email, :presence => true
 
@@ -85,10 +85,13 @@ class User
   def confirmed
     confirmed_at.blank? ? false : true
   end
-
-  def create_without_email_validation
-    self.skip_confirmation!
-    self.save(validate: false)
+  
+  def email_required?
+    if !self.auth_providers? && !self.email?
+      false
+    else
+      true
+    end
   end
  
  
@@ -96,7 +99,7 @@ class User
  
   def generate_authentication_token
     loop do
-      token = Devise.friendly_token
+      token = Devise.friendly_token[0,32]
       break token unless User.where(authentication_token: token).first
     end
   end

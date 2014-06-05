@@ -18,6 +18,8 @@ class Api::V1::AuthenticationController < Api::V1::ApplicationController
       user = User.find_for_database_authentication(email: email)
       if user && user.valid_password?(password)
         authenticate_user!(user)
+      elsif User.find_for_database_authentication(unconfirmed_email: email)
+        invalid_login_attempt("Your email address has not been confirmed.  Please check your inbox for confirmation instructions.")
       else
         invalid_login_attempt("Email or Password are incorrect.")
       end

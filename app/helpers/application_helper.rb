@@ -23,7 +23,7 @@ module ApplicationHelper
   end
 
   def current_user
-    @current_user ||= User.find_for_database_authentication(request.headers['X-Authentication-Token'])
+    @current_user ||= User.where(authentication_token: request.headers['X-Authentication-Token']).first
   end
 
   def authenticate_user!(user)
@@ -48,13 +48,12 @@ module ApplicationHelper
 
   def authenticate_user_from_token!
     if ensure_params_exist
-      user = User.where(email: params[:authentication][:user_email]).first
-
-      if user && Devise.secure_compare(user.authentication_token, params[:authentication][:authentication_token])
+      user = User.find_for_database_authentication(authentication_token: params[:authentication][:authentication_token])
+      if user
         @current_user = user
         return
       else
-        invalid_login_attempt("Your Authentication failed.  Your Email and Authentication Token did not match.  Login/Reauthenticate to get a proper Authentication Token.")
+        invalid_login_attempt("Your Authentication failed.  Your Authentication Token is invalid.  Login/Reauthenticate to get a proper Authentication Token.")
       end
     else
       return false
@@ -62,7 +61,7 @@ module ApplicationHelper
   end
 
   def ensure_params_exist
-    if ensure_authentication_token && ensure_user_email
+    if ensure_authentication_token
       return true
     else
       return false
@@ -76,9 +75,7 @@ module ApplicationHelper
     key = name.join('_').to_sym
     header_key ||= "X-#{name.map(&:capitalize).join('-')}"
 
-    logger.debug "\n\rheader: #{request.headers['X-Authentication-Token']}\n\r"
-    logger.debug "\n\rheader: #{request.headers['X-User-Email']}\n\r"
-    logger.debug "\n\rheader: #{request.headers['X-User-Password']}\n\r"
+    logger.debug "\n\rheader: #{request.headers[header_key]}\n\r"
 
     if params[:authentication][key].blank? && request.headers[header_key]
       params[:authentication][key] = request.headers[header_key]
