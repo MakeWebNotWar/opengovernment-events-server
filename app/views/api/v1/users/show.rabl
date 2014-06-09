@@ -25,13 +25,10 @@ node :notifications do
   end
 end
 
-
 if current_user && current_user.id == root_object.id
   node :email do
-    if !root_object.email.empty?
+    if root_object.email
       root_object.email
-    elsif !root_object.unconfirmed_email.empty?
-      root_object.unconfirmed_email
     else
       nil
     end
