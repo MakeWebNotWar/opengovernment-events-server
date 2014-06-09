@@ -83,14 +83,11 @@ class Api::V1::AuthenticationController < Api::V1::ApplicationController
         }
         authProvider.save
 
-        render json: { success: false, requires_signup: true, message: "You must signup first an account first."}, status: 401
-        return
+        
+        return user
       end
     else
       return false
     end
-
-    return user
   end
-
 end
