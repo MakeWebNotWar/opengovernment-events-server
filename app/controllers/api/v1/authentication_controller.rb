@@ -71,21 +71,32 @@ class Api::V1::AuthenticationController < Api::V1::ApplicationController
 
       authProvider = AuthProvider.find_or_initialize_by(user_uid: user_id, name: "twitter")
 
-      if authProvider && authProvider.persisted? && authProvider.user?
-        user = authProvider.user
-      else
+      if !authProvider.persisted?
         authProvider.attributes = {
-          name: "twitter",
-          user_uid: user_id,
           user_name: name,
           user_screen_name: user_screen_name,
           user_profile_image_url: profile_image_url
         }
-        authProvider.save
-
-        
-        return user
+        authProvider.save    
       end
+
+      user = authProvider.user
+
+      if !user
+        if current_user
+          user = current_user
+        else
+          user = User.new
+          user.attributes = {
+            firstname: firstname,
+            lastname: lastname,
+          }
+          user.auth_providers << authProvider
+          user.save
+        end
+      end
+
+      return user
     else
       return false
     end

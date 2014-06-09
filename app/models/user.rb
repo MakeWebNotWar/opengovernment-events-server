@@ -87,7 +87,7 @@ class User
   end
   
   def email_required?
-    if !self.auth_providers? && !self.email?
+    if self.auth_providers? || self.email?
       false
     else
       true
