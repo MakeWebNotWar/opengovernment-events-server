@@ -91,9 +91,10 @@ class Api::V1::AuthenticationController < Api::V1::ApplicationController
             firstname: firstname,
             lastname: lastname,
           }
-          user.auth_providers << authProvider
-          user.save
         end
+
+        user.auth_providers << authProvider
+        user.save
       end
 
       return user
