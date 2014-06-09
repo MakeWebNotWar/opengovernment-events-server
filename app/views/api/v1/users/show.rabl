@@ -28,9 +28,9 @@ end
 
 if current_user && current_user.id == root_object.id
   node :email do
-    if !root_object.email.empty?
+    if !@user.email.empty?
       root_object.email
-    elsif !root_object.unconfirmed_email.empty?
+    elsif !@user.unconfirmed_email.empty?
       root_object.unconfirmed_email
     else
       nil
