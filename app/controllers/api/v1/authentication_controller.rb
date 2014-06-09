@@ -87,9 +87,12 @@ class Api::V1::AuthenticationController < Api::V1::ApplicationController
           user = current_user
         else
           user = User.new
+          generatedPassword = Devise.friendly_token.first(8)
           user.attributes = {
             firstname: firstname,
             lastname: lastname,
+            password: generatedPassword,
+            password_confirmation: generatedPassword
           }
         end
 
