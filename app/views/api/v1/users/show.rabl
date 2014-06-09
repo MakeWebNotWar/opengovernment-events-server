@@ -35,7 +35,5 @@ if current_user && current_user.id == root_object.id
     else
       nil
     end
-  else
-    nil
   end
 end
