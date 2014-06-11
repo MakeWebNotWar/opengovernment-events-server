@@ -16,3 +16,19 @@ node :event, :object_root => :event do
     nil
   end
 end
+
+node :replies do
+  if root_object.replies
+    root_object.replies.map { |reply| reply.id }
+  else
+    nil
+  end
+end
+
+node :parent_comment do
+  if root_object.parent_comment
+    root_object.parent_comment.id
+  else
+    nil
+  end
+end

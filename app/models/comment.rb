@@ -8,8 +8,7 @@ class Comment
   # belongs_to :owner, class_name: "User", inverse_of: :comments
   belongs_to :user
   belongs_to :event
-  belongs_to :commentable, polymorphic: true
-  has_many :replies, class_name: "Comment", inverse_of: "parent_comment"
+  has_many :replies, class_name: "Comment", inverse_of: "parent_comment", order: :created_at.asc
   belongs_to :parent_comment, class_name: "Comment", inverse_of: "replies"
 
   def in_reply_to

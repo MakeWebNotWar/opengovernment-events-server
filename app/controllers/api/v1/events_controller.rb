@@ -7,9 +7,9 @@ class Api::V1::EventsController < Api::V1::ApplicationController
   def index
     params[:start_date] = Time.now if(!params[:start_date])
 
-    # @events = Event.where(:start_date.gte => params[:start_date] - 1.day).asc().to_a
+    @events = Event.where(:start_date.gte => params[:start_date] - 1.day).asc().to_a
 
-    @events = Event.all
+    # @events = Event.all
 
   end
 
@@ -18,24 +18,37 @@ class Api::V1::EventsController < Api::V1::ApplicationController
   end
 
   def create
-    params[:event][:user] = current_user.id.to_s
+    if current_user
+      @event = Event.new(event_params)
+      @event.user = current_user
 
-    @event = Event.new(event_params)
-    if @event.save
-      render :show
+      if params[:location]
+        location = Location.find_or_create_by(location_params)
+        @event.location = location
+      end
+
+      if @event.save
+        render :show
+      else
+        invalid_attempt("Unable to create Event.")
+      end
     else
-      invalid_attempt("Unable to create Event.", @event)
+      invalid_attempt("You must be logged in.")
     end
   end
 
   def update
-
-    @event.attributes(event_params)
-    @event.user = current_user.id.to_s
-    if @event.save
-      render :show
+    @event = Event.find(params[:id])
+    if current_user && (current_user.admin || @event.user == current_user)
+      @event.attributes(event_params)
+      @event.user == current_user.id.to_s
+      if @event.save
+        render :show
+      else
+        invalid_attempt("Unable to update Event.", @event)
+      end
     else
-      invalid_attempt("Unable to update Event.", @event)
+      invalid_attempt('You must be logged in and be the event creator to update this event.')
     end
   end
 
@@ -51,7 +64,11 @@ class Api::V1::EventsController < Api::V1::ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:id, :name, :description, :url, :start_date, :end_date, :type, :user)
+    params.require(:event).permit(:id, :name, :description, :url, :start_date, :end_date, :type, :user, :location)
+  end
+
+  def location_params
+    params.require(:location).permit(:name, :address_1, :address_2, :city, :province, :postal_code, :country)
   end
 
   def correct_user

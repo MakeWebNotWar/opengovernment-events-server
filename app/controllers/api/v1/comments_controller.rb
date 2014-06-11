@@ -2,7 +2,7 @@ class Api::V1::CommentsController < Api::V1::ApplicationController
   skip_before_filter :authenticate_user_from_token!, only: [:index, :show]
   
   def index
-    @comments = Comment.all
+    @comments = Comment.all.desc(:created_at)
   end 
 
   def show
