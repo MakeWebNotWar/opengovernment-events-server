@@ -11,13 +11,16 @@ class Api::V1::CommentsController < Api::V1::ApplicationController
 
 
   def create
-    logger.debug "\n\r#{request.headers}\n\r"
-    @comment = Comment.new(comment_params)
-    @comment.user = current_user
-    if @comment.save
-      render :show
+    if current_user
+      @comment = Comment.new(comment_params)
+      @comment.user = current_user
+      if @comment.save
+        render :show
+      else
+        invalid_attempt("Could not create Comment.", @comment)
+      end
     else
-      invalid_attempt("Could not create Comment.", @comment)
+      invalid_attempt("You must be logged in to create a comment");
     end
   end
 
@@ -39,7 +42,7 @@ class Api::V1::CommentsController < Api::V1::ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:text, :event_id, :user)
+    params.require(:comment).permit(:text, :event, :user)
   end
 
 end

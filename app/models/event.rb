@@ -5,8 +5,10 @@ class Event
   field :name, type: String, default: "Untitled Event"
   field :description, type: String, default: "No Description."
   field :url, type: String, default: nil
-  field :start_date, type: DateTime, default: Time.now
-  field :end_date, type: DateTime, default: Time.now + 1.hour
+  field :start_date, type: Date, default: DateTime.now.to_date
+  field :start_time, type: Time, default: Time.now.strftime("%H:%M %z")
+  field :end_date, type: Date, default: DateTime.now.to_date
+  field :end_time, type: Time, default: (Time.now + 1.hour).strftime("%H:%M %z")
   field :type, type: String
 
   belongs_to :user
