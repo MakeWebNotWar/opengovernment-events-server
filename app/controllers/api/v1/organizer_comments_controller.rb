@@ -10,6 +10,7 @@ class Api::V1::OrganizerCommentsController < Api::V1::ApplicationController
   end
 
   def create
+    event = Event.find(params[:comment][:event])
     if current_user
       @comment = OrganizerComment.new(comment_params)
       @comment.user = current_user

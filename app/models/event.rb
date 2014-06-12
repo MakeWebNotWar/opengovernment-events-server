@@ -23,4 +23,12 @@ class Event
 
   validates_uniqueness_of :name
 
+  after_create :update_organizers
+
+  protected
+
+  def update_organizers
+    self.organizers << self.owner
+  end
+
 end
