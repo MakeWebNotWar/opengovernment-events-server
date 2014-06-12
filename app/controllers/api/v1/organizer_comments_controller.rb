@@ -10,14 +10,18 @@ class Api::V1::OrganizerCommentsController < Api::V1::ApplicationController
   end
 
   def create
-    event = Event.find(params[:comment][:event])
-    if current_user
-      @comment = OrganizerComment.new(comment_params)
-      @comment.user = current_user
-      if @comment.save
-        render :show
+    if current_user && params[:comment][:event]
+      event = Event.where({id: params[:comment][:event], organizer_ids: current_user.id}).first
+      if event
+        @comment = OrganizerComment.new(comment_params)
+        @comment.user = current_user
+        if @comment.save
+          render :show
+        else
+          invalid_attempt("Could not create Comment.", @comment)
+        end
       else
-        invalid_attempt("Could not create Comment.", @comment)
+        invalid_attempt("You are not an organizer of this event.")
       end
     else
       invalid_attempt("You must be logged in to create a comment");

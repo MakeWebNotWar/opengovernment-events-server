@@ -20,7 +20,7 @@ class Api::V1::EventsController < Api::V1::ApplicationController
   def create
     if current_user
       @event = Event.new(event_params)
-      @event.user = current_user
+      @event.owner = current_user
 
       if params[:location]
         location = Location.find_or_create_by(location_params)
@@ -39,9 +39,8 @@ class Api::V1::EventsController < Api::V1::ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    if current_user && (current_user.admin || @event.user == current_user)
+    if current_user && (current_user.admin || @event.owner == current_user)
       @event.attributes(event_params)
-      @event.user == current_user.id.to_s
       if @event.save
         render :show
       else
@@ -73,7 +72,7 @@ class Api::V1::EventsController < Api::V1::ApplicationController
 
   def correct_user
     @event = Event.find(params[:id])
-    return if current_user === @event.user
+    return if current_user === @event.owner
   end
 
 end
