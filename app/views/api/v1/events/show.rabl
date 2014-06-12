@@ -13,9 +13,21 @@ node :comments do
   root_object.comments.map { |comment| comment.id }
 end
 
-node :user, :object_root => :user do
-  if root_object.user
-    root_object.user.id
+node :organizer_comments do 
+  root_object.organizer_comments.map { |comment| comment.id }
+end
+
+node :organizers do
+  if root_object.organizers
+    root_object.organizers.map { |user| user.id }
+  else
+    []
+  end
+end
+
+node :owner, :object_root => :owner do
+  if root_object.owner
+    root_object.owner.id
   else
     nil
   end

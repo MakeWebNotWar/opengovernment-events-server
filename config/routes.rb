@@ -8,7 +8,9 @@ OpengovernmentRoadtrip::Application.routes.draw do
 
       resources :events
       resources :comments
+      resources :organizer_comments
       resources :replies
+      resources :organizer_replies
       resources :locations
       resources :authentication, only: [:create, :destroy]
       devise_for :users

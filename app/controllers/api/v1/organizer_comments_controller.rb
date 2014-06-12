@@ -1,17 +1,17 @@
-class Api::V1::CommentsController < Api::V1::ApplicationController
+class Api::V1::OrganizerCommentsController < Api::V1::ApplicationController
   skip_before_filter :authenticate_user_from_token!, only: [:index, :show]
-  
+
   def index
-    @comments = Comment.all.desc(:created_at)
-  end 
+    @comments = OrganizerComment.all.desc(:created_at)
+  end
 
   def show
-    @comment = Comment.find(params[:id])
+    @comment = OrganizerComment.find(params[:id])
   end
 
   def create
     if current_user
-      @comment = Comment.new(comment_params)
+      @comment = OrganizerComment.new(comment_params)
       @comment.user = current_user
       if @comment.save
         render :show
@@ -24,7 +24,7 @@ class Api::V1::CommentsController < Api::V1::ApplicationController
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
+    @comment = OrganizerComment.find(params[:id])
 
     if @comment.user === current_user
 
@@ -37,7 +37,7 @@ class Api::V1::CommentsController < Api::V1::ApplicationController
       render json: { success: false, message: "This comment does not belong to you."}, status: 400
     end
   end
- 
+
   private
 
   def comment_params

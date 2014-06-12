@@ -25,6 +25,14 @@ node :notifications do
   end
 end
 
+node :organizes do
+  if root_object.organizes
+    root_object.organizes.map { |event| event.id }
+  else
+    []
+  end
+end
+
 if current_user && current_user.id == root_object.id
   node :email do
     if root_object.email

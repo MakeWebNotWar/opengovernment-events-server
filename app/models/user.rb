@@ -54,9 +54,11 @@ class User
   # field :locked_at,       :type => Time
 
   has_many :comments
-  has_many :events
+  has_many :events, inverse_of: :user
+  has_many :events, inverse_of: :owner
   has_many :notifications
   has_many :auth_providers
+  has_and_belongs_to_many :organizes, class_name: "Event", inverse_of: :organizers
 
   index({ authentication_token: 1 }, { unique: true, name: "authentication_token_index" })
   index({ confirmation_token: 1}, {unique: true, name: "confirmation_token_index"})
