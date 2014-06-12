@@ -10,11 +10,19 @@ node :location, :object_root => :location do
 end
 
 node :comments do 
-  root_object.comments.map { |comment| comment.id }
+  if root_object.comments
+    root_object.comments.map { |comment| comment.id }
+  else
+    []
+  end
 end
 
-node :organizer_comments do 
-  root_object.organizer_comments.map { |comment| comment.id }
+node :ocomments do 
+  if root_object.organizer_comments
+    root_object.organizer_comments.map { |comment| comment.id }
+  else
+    []
+  end
 end
 
 node :organizers do

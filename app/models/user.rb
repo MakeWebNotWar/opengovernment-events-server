@@ -54,6 +54,7 @@ class User
   # field :locked_at,       :type => Time
 
   has_many :comments
+  has_many :ocomments
   has_many :events, inverse_of: :user
   has_many :events, inverse_of: :owner
   has_many :notifications

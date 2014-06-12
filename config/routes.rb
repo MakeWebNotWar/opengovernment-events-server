@@ -9,6 +9,11 @@ OpengovernmentRoadtrip::Application.routes.draw do
       resources :events
       resources :comments
       resources :organizer_comments
+      resources :ocomments, controller: "organizer_comments"
+      # get "/ocomments", controller: "organizer_comments", action: "index"
+      # get "/ocomments/:id", controller: "organizer_comments", action: "show"
+      # post "/ocomments", controller: "organizer_comments", action: "create"
+      # delete "/ocomments", controller: "organizer_comments", action: "destroy"
       resources :replies
       resources :organizer_replies
       resources :locations
