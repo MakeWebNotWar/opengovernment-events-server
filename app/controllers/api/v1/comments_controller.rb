@@ -11,6 +11,7 @@ class Api::V1::CommentsController < Api::V1::ApplicationController
 
   def create
     if current_user
+      params[:comment][:text] = reverse_markdown(params[:comment][:text])
       @comment = Comment.new(comment_params)
       @comment.user = current_user
       if @comment.save

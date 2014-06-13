@@ -1,4 +1,5 @@
 module ApplicationHelper
+  require 'reverse_markdown'
 
   protected
 
@@ -116,5 +117,8 @@ module ApplicationHelper
     return access_token
   end
 
+  def reverse_markdown(html)
+    ReverseMarkdown.convert(html, unknown_tags: :ignore)
+  end
 
 end

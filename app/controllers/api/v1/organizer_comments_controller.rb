@@ -11,6 +11,7 @@ class Api::V1::OrganizerCommentsController < Api::V1::ApplicationController
 
   def create
     if current_user && params[:comment][:event]
+      params[:comment][:text] = reverse_markdown(params[:comment][:text])
       event = Event.where({id: params[:comment][:event], organizer_ids: current_user.id}).first
       if event
         @comment = OrganizerComment.new(comment_params)
