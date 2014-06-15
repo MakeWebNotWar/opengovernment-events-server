@@ -72,7 +72,11 @@ class User
   end
 
   def gravatarID
-    Digest::MD5::hexdigest(email).downcase
+    if self.email
+      Digest::MD5::hexdigest(self.email).downcase
+    else
+      nil
+    end
   end
 
   def ensure_authentication_token

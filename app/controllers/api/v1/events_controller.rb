@@ -10,7 +10,6 @@ class Api::V1::EventsController < Api::V1::ApplicationController
     @events = Event.where(:start_date.gte => params[:start_date] - 1.day).asc().to_a
 
     # @events = Event.all
-
   end
 
   def show
